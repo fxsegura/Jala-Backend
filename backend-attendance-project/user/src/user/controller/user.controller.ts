@@ -23,10 +23,15 @@ export class UserController{
         res.send(newUser);
     }
 
+    public delete = async (req: Request, res: Response) => {
+        const id =  req['params']['id'];
+        res.send(this.userService.delete(id));
+      } 
 
 
     public routes(){
         this.router.get('/',this.readUserController);
         this.router.post('/',this.createUserController);
+        this.router.delete('/:id', this.delete);
     }
 }

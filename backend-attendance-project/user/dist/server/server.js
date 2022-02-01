@@ -16,15 +16,16 @@ exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const user_controller_1 = require("../user/controller/user.controller");
+const path_1 = __importDefault(require("path"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.configuration();
-        this.userController = new user_controller_1.UserController();
         this.routes();
     }
     configuration() {
         this.app.set('port', 3000);
+        this.app.use(express_1.default.json());
     }
     routes() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,16 +36,17 @@ class Server {
                 username: "root",
                 password: "root",
                 database: "attendancedb",
-                entities: [""],
-                name: "users"
+                synchronize: true,
+                entities: [
+                    path_1.default.join(__dirname, '../**/entities/*.entity.js')
+                ]
             });
-            this.app.use('/api/user', this.userController.router);
+            console.log("Created connection");
+            this.userController = new user_controller_1.UserController();
             this.app.get("/", (req, res) => {
                 res.send("Hello World");
             });
-            this.app.post("/", (req, res) => {
-                res.send("Hello World");
-            });
+            this.app.use('/api/user', this.userController.router);
         });
     }
     start() {

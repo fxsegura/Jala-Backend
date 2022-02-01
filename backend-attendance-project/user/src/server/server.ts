@@ -1,6 +1,7 @@
 import express, { Request, request, Response, response } from "express";
 import { createConnection } from "typeorm";
 import { UserController } from "../user/controller/user.controller";
+import path from 'path';
 
 export class Server {
     private app: express.Application;
@@ -9,13 +10,12 @@ export class Server {
     constructor() {
         this.app = express();
         this.configuration();
-        this.userController = new UserController();
         this.routes();
     }
 
     public configuration() {
         this.app.set('port', 3000);
-
+        this.app.use(express.json());
     }
 
     public async routes() {
@@ -26,14 +26,18 @@ export class Server {
             username: "root",
             password: "root",
             database: "attendancedb",
-            entities: ["build/user/entities/**/*.ts"],
-            name: "users"
+            synchronize: true,
+            entities: [
+                path.join(__dirname, '../**/entities/*.entity.js')
+            ]
         });
-
-        this.app.use('/api/user', this.userController.router);
+        console.log("Created connection");
+        this.userController = new UserController();
         this.app.get("/", (req: Request, res: Response) => {
             res.send("Hello World");
         });
+        this.app.use('/api/user', this.userController.router);
+
     }
 
     public start() {

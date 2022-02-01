@@ -15,18 +15,26 @@ const user_service_1 = require("../services/user.service");
 class UserController {
     constructor() {
         this.readUserController = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            res.send(this.userService.readUserService());
+            const users = yield this.userService.readUserService();
+            res.send(users).json();
+        });
+        this.createUserController = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req['body'];
+            const newUser = yield this.userService.createUserService(user);
+            res.send(newUser);
+        });
+        this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req['params']['id'];
+            res.send(this.userService.delete(id));
         });
         this.router = (0, express_1.Router)();
         this.userService = new user_service_1.UserService();
         this.routes();
     }
-    createUserController(req, res) {
-        res.send(this.userService.createUserService());
-    }
     routes() {
         this.router.get('/', this.readUserController);
         this.router.post('/', this.createUserController);
+        this.router.delete('/:id', this.delete);
     }
 }
 exports.UserController = UserController;
