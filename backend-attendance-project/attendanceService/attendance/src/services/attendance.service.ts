@@ -1,6 +1,7 @@
 import { Connection, createConnection, getConnection, getConnectionManager, getConnectionOptions, QueryRunner } from "typeorm";
 import { Attendance } from "../entity/attendance";
 import { AttendanceRepository } from "../repository/attendance.repository";
+import "reflect-metadata";
 
 export class AttendanceService {
     private attendanceRepository: AttendanceRepository;
