@@ -1,7 +1,7 @@
 import express, { Request, request, Response, response } from "express";
-import { createConnection } from "typeorm";
+import { createConnection, getConnectionOptions } from "typeorm";
 import { AttendanceController } from "../controller/attendance.controller";
-import { Attendance } from "../entity/attendance";
+import { Attendance } from "../entity/attendance.entity";
 ///import path from 'path';
 
 export class Server {
@@ -19,10 +19,34 @@ export class Server {
     }
 
     public async routes() {
-        await createConnection().then(async connection => {
-
-
-        }).catch(error => console.log(error));
+        const connectionOptions = await getConnectionOptions();
+        // await createConnection({
+        //     type: "mongodb",
+        //     url: "mongodb+srv://admin:Passw0rd@backend-jalasoft-projec.7ztqa.mongodb.net/assistanceBackend?retryWrites=true&w=majority",
+        //     useNewUrlParser: true,
+        //     port: 27017,
+        //     username: "admin",
+        //     password: "Passw0rd",
+        //     database: "assistanceBackend",
+        //     synchronize: true,
+        //     logging: false,
+        //     entities: [
+        //         "src/entity/**/*.entity.ts"
+        //     ],
+        //     migrations: [
+        //         "src/migration/**/*.ts"
+        //     ],
+        //     subscribers: [
+        //         "src/subscriber/**/*.ts"
+        //     ],
+        //     cli: {
+        //         "entitiesDir": "src/entity",
+        //         "migrationsDir": "src/migration",
+        //         "subscribersDir": "src/subscriber"
+        //     }
+        // });
+        await createConnection(connectionOptions).then(async connection => {
+        });
         console.log("Created connection");
         this.attendanceController = new AttendanceController();
         this.app.get("/", (req: Request, res: Response) => {

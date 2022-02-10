@@ -37,6 +37,7 @@ export class Server {
             res.send("Hello World");
         });
         this.app.use('/api/user', this.userController.router);
+        
 
     }
 

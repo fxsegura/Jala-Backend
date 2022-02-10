@@ -15,6 +15,20 @@ export class UserService {
         return users;
     }
 
+    public filterUserService = async (name:string) => {
+        const users = await this.userRepository.find({name: name});
+        //const filterResult= 
+        
+        return users;
+    }
+
+    public filterUserById = async (id:string) => {
+        const users = await this.userRepository.find({id: id});
+        //const filterResult= 
+        
+        return users;
+    }
+
     public createUserService = async (user: UserEntity) => {
         const newUser = await this.userRepository.save(user);
         return newUser;

@@ -1,5 +1,5 @@
 import { Connection, createConnection, getConnection, getConnectionManager, getConnectionOptions, QueryRunner } from "typeorm";
-import { Attendance } from "../entity/attendance";
+import { Attendance } from "../entity/attendance.entity";
 import { AttendanceRepository } from "../repository/attendance.repository";
 import "reflect-metadata";
 

@@ -18,6 +18,11 @@ class UserService {
             const users = yield this.userRepository.find();
             return users;
         });
+        this.filterUserService = (name) => __awaiter(this, void 0, void 0, function* () {
+            const users = yield this.userRepository.find({ name: name });
+            //const filterResult= 
+            return users;
+        });
         this.createUserService = (user) => __awaiter(this, void 0, void 0, function* () {
             const newUser = yield this.userRepository.save(user);
             return newUser;

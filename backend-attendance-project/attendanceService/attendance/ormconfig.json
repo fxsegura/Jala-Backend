@@ -9,7 +9,7 @@
    "synchronize": true,
    "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "src/entity/**/*.entity.ts"
    ],
    "migrations": [
       "src/migration/**/*.ts"
